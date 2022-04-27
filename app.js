@@ -1,6 +1,18 @@
-var http= require('http');
+const express= require('express');
+const app = express();
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'test-swastik'
+})
 
-http.createServer (function(req, res){
-    res.write("Hello nodemon in google")
-    res.end();
-    }).listen(8000);
+connection.connect()
+// connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+//     if (err) throw err
+  
+//     console.log('The solution is: ', rows[0].solution)
+//   })
+  
+// connection.end()
