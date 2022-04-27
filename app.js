@@ -1,9 +1,9 @@
 const express= require('express');
 const app = express();
 const mysql = require('mysql')
-const connection = mysql.createConnection({
+// const connection = mysql.createConnection({
   
-})
+// })
 
 connection.connect()
 // connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
