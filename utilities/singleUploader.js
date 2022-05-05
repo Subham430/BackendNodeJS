@@ -1,6 +1,6 @@
  // external imports
-const multer=require("multer");
-const path=require("path");
+const multer = require("multer");
+const path = require("path");
 
 function uploader(
     subfolder_path,
@@ -13,11 +13,11 @@ function uploader(
 
     // degine the storage
     const storage = multer.diskstorage({
-    destination: (req, file, cb) => {
+      destination: (req, file, cb) => {
       cb(null, UPLOADS_FOLDER);
     },
     filename: (req, file, cb) =>{
-      const fileExt= path. extname(file.originalname);
+      const fileExt= path.extname(file.originalname);
       const fileName=
            file.originalname
             .replace(fileExt, "")
@@ -33,13 +33,13 @@ function uploader(
 const upload=multer({
     storage: storage,
     limits:{
-      filesize: nax_file_size,
+      filesize: max_file_size,
       },
     filefilter: (req, file, cb) =>{
-      if (allowed_file_types.includes (file.nimetype)){
+      if (allowed_file_types.includes(file.nimetype)){
         cb(null, truc);
        }else{
-        cb(createErrOI(error_msg));
+        cb(createError(error_msg));
        }
     },
 });
