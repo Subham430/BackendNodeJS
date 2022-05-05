@@ -7,10 +7,10 @@ const app = express();
 
 const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandler')
 
-const loginRouter = require("./router/loginRouter");
-const adminRouter = require('./routes/adminRouter');
-const employeeRouter = require('./routes/employeeRouter');
-const companyRouter = require('./routes/companyRouter');
+const loginRouter = require("./routers/loginRouter");
+const adminRouter = require('./routers/adminRouter');
+const employeeRouter = require('./routers/employeeRouter');
+const companyRouter = require('./routers/companyRouter');
 
 app.use('/',loginRouter);
 app.use('/admin',adminRouter);
