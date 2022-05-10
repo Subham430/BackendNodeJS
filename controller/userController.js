@@ -1,15 +1,7 @@
 // external imports
-// const bcrypt = require("bcrypt");
-
-// internal imports
-// const {User} = require("../models/User");
 const { sequelize } = require("../config/server"),
     { User } = sequelize.models,
     bcrypt = require("bcrypt");
-
-// const { UserModel } = require("../models");
-// var jwt = require('jsonwebtoken');
-// const { User } = require('../config/server');
 
 // get users page
 async function getEmployee(req, res, next) {
@@ -56,44 +48,35 @@ async function addEmployee(request, res, next) {
         },
       });
   }
-    // newUser = new User({
-    //   ...request.body,
-    //   password: hashedPassword,
-    // });
-
-    // save user or send error
-    // try {
-    //     const result = await newUser.save();
-    //     res.status(201).json({
-    //         message: "User was added successfully!",
-    //         data: newUser,
-    //     });
-    // } catch (err) {
-    //     res.status(500).json({
-    //         errors: {
-    //             common: {
-    //                 msg: "Unknown error occured!",
-    //             },
-    //         },
-    //     });
-    // }
 }
 
 // remove user
 async function removeEmployee(req, res, next) {
-  try {
-    const user = await User.findByIdAndDelete({
-      _id: req.params.id,
-    });
 
-    res.status(200).json({
-      message: "User was removed successfully!",
+  try{
+    await User.destroy({
+      where: {
+          id: req.params.id
+      }
+    })
+    .then(function (deletedRecord) {
+      if(deletedRecord === 1){
+          res.status(200).json({message:"Deleted successfully"});          
+      }
+      else
+      {
+          res.status(404).json({message:"record not found"})
+      }
+    })
+    .catch(function (error){
+      res.status(500).json(error);
     });
-  } catch (err) {
+  }catch (err) {
     res.status(500).json({
       errors: {
         common: {
-          msg: "Could not delete the user!",
+          msg: "Unknown error occured!",
+          error: err
         },
       },
     });

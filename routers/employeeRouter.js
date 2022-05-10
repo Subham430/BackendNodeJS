@@ -3,12 +3,11 @@ const employeeRouter = express.Router();
 
 // internal imports
 const { addUserValidators, addUserValidationHandler} = require("../middlewares/employee/employeeValidator");
-// const {addEmployee, employee} = require("../controller/userController");
 const { UserController } = require("../controller");
 
-// login page
-employeeRouter.post("/add", UserController.addEmployee);
-// employeeRouter.get("/", employee);
-
+//user add
+employeeRouter.post("/add", addUserValidators, addUserValidationHandler, UserController.addEmployee);
+//user removal
+employeeRouter.delete("/remove/:id", UserController.removeEmployee);
 
 module.exports = employeeRouter;
