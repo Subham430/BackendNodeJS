@@ -1,9 +1,14 @@
 require('dotenv').config();
 
 const path = require("path");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
+const body = require('body-parser');
 const express = require('express');
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended:true }));
+
 
 const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandler')
 
@@ -12,7 +17,7 @@ const adminRouter = require('./routers/adminRouter');
 const employeeRouter = require('./routers/employeeRouter');
 const companyRouter = require('./routers/companyRouter');
 
-app.use('/',loginRouter);
+app.use('/login',loginRouter);
 app.use('/admin',adminRouter);
 app.use('/employee',employeeRouter);
 app.use('/company',companyRouter);

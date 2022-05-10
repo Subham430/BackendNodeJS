@@ -1,11 +1,12 @@
- // external imports
- const express = require("express");
- const loginRouter = express.Router();
+// external imports
+const express = require("express");
+const loginRouter = express.Router();
 
-  // internal imports
-const {getLogin} = require("../controller/loginController");
+// internal imports
+const { doLoginValidators, doLoginValidationHandler } = require("../middlewares/login/loginValidators");
+const {login} = require("../controller/loginController");
 
- // login page
- loginRouter.get("/", getLogin);
+// login page
+loginRouter.post("/", doLoginValidators, doLoginValidationHandler, login);
 
- module.exports = loginRouter;
+module.exports = loginRouter;

@@ -7,8 +7,9 @@ function notFoundHandler(req, res, next) {
 
 // default error handler
 function errorHandler(err, req, res, next) {
-    res.render('error', {
-        title: "Error page"
+    res.status(500).json({
+        message: "error occured!",
+        Error: err,
     })
 }
 
