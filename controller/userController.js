@@ -83,6 +83,38 @@ async function removeEmployee(req, res, next) {
   }
 }
 
+// restore user
+async function restoreEmployee(req, res, next) {
+
+  try{
+    await User.restore({
+      where: {
+          id: req.params.id
+      }
+    }).then(function (restoreRecord) {
+      if(restoreRecord === 1){
+          res.status(200).json({message:"restore successfully"});          
+      }
+      else
+      {
+          res.status(404).json({message:"record not found"})
+      }
+    })
+    .catch(function (error){
+      res.status(500).json(error);
+    });
+  }catch (err) {
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: "Unknown error occured!",
+          error: err
+        },
+      },
+    });
+  }
+}
+
 //test
 // get users page
 async function employee(req, res, next) {
@@ -96,5 +128,6 @@ module.exports = {
   getEmployee,
   addEmployee,
   removeEmployee,
+  restoreEmployee,
   employee
 };

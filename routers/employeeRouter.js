@@ -9,5 +9,7 @@ const { UserController } = require("../controller");
 employeeRouter.post("/add", addUserValidators, addUserValidationHandler, UserController.addEmployee);
 //user removal
 employeeRouter.delete("/remove/:id", UserController.removeEmployee);
+//user restore
+employeeRouter.get("/restore/:id", UserController.restoreEmployee);
 
 module.exports = employeeRouter;
