@@ -3,18 +3,36 @@ const { sequelize } = require("../config/server"),
     { User } = sequelize.models,
     bcrypt = require("bcrypt");
 
-// get users page
+// get user details
 async function getEmployee(req, res, next) {
   try {
-    const users = await User.find();
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
     res.status(200).json({
-            message: "User was added successfully!",
-            data: users,
-        });
+      message: "User details",
+      data: user,
+    });
     } catch (err) {
-        next(err);
+      next(err);
     }
 }
+
+// get users details
+async function getEmployeesDetails(req, res, next) {
+  try {
+    const users = await User.findAll();
+    res.status(200).json({
+      message: "User details",
+      data: users,
+    });
+    } catch (err) {
+      next(err);
+    }
+}
+
 
 // add user
 async function addEmployee(request, res, next) {
@@ -129,5 +147,6 @@ module.exports = {
   addEmployee,
   removeEmployee,
   restoreEmployee,
+  getEmployeesDetails,
   employee
 };
