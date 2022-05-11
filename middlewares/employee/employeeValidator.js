@@ -1,9 +1,9 @@
 // external imports
-const{check, validationResult}=require("express-validator");
+const{check, validationResult} = require("express-validator");
 const createError=require("http-errors");
 
-// intennal imports
-const User=require("../../models/User");
+const { sequelize } = require("../../config/server"),
+    { User } = sequelize.models;
 
 // add user
 const addUserValidators=[
@@ -25,32 +25,34 @@ const addUserValidators=[
         .trim()
         .custom(async (value) => {
             try{
-                const user=await User.findone({ email: value });
+                const user=await User.findOne({
+                    where: {
+                        email: value,
+                    }
+                });
                 if (user){
-                    throw createError("Email already is user!");
+                    throw createError("Email already is exists!");
                 }
             }catch (err){
-                throw createError(err.nessage);
+                throw createError(err.message);
             }         
         }),
     check("password")
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,16}$/, "i")
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,16}$/, "i")
+        // .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,16}$/, "i")
         .withMessage("Password must contains minimum 8 and maximum 16 characters, include one lowercase character, one uppercase character, a number, and a special character."),
     
 ];
 
-const addUserValidationHandler=function (req, res, next){
+const addUserValidationHandler = function (req, res, next){
     const errors = validationResult(req);
-    const mappedErrors = errors.mapped();
-    console.log(object.keys(mappedErrors) );
-   if (object.keys(mappedErrors).length === 0){
-    console.log("pass");
-      next();
-   }else{
-    console.log("addUserValidationHandler");
+    console.log(errors,errors.isEmpty());
+    if (errors.isEmpty()){
+        next();
+    }else{
         // response the enrors
         res.status(500).json({
-            errors: mappedErrors,
+            errors: errors,
         });
     }
 };
