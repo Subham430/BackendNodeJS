@@ -12,11 +12,13 @@ const doLoginValidators = [
 
 const doLoginValidationHandler = function (req, res, next) {
   const errors = validationResult(req);
-  const mappedErrors = errors.mapped();
-  if (Object.keys(mappedErrors).length === 0) {
+  if (errors.isEmpty()){
     next();
-  } else {
-    res.status(500).json({ error: mappedErrors });    
+  }else{
+    // response the enrors
+    res.status(500).json({
+        errors: errors,
+    });
   }
 };
 

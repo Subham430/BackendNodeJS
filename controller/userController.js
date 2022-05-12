@@ -1,19 +1,19 @@
 // external imports
 const { sequelize } = require("../config/server"),
-    { User } = sequelize.models,
+    { user } = sequelize.models,
     bcrypt = require("bcrypt");
 
 // get user details
 async function getEmployee(req, res, next) {
   try {
-    const user = await User.findOne({
+    const user_details = await user.findOne({
       where: {
         id: req.params.id
       }
     });
     res.status(200).json({
       message: "User details",
-      data: user,
+      data: user_details,
     });
     } catch (err) {
       next(err);
@@ -23,7 +23,7 @@ async function getEmployee(req, res, next) {
 // get users details
 async function getEmployeesDetails(req, res, next) {
   try {
-    const users = await User.findAll();
+    const users = await user.findAll();
     res.status(200).json({
       message: "User details",
       data: users,
@@ -39,16 +39,16 @@ async function addEmployee(request, res, next) {
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
   
   try{
-    await User.create({
+    await user.create({
       user_name: request.body.user_name,
       company_name: request.body.company_name,
       email: request.body.email,
       password: hashedPassword
-    }).then(function (User) {
-      if (User) {
+    }).then(function (user) {
+      if (user) {
         res.status(201).json({
             message: "User was added successfully!",
-            data: User,
+            data: user,
         });
       } else {
           response.status(400).json({
@@ -72,7 +72,7 @@ async function addEmployee(request, res, next) {
 async function removeEmployee(req, res, next) {
 
   try{
-    await User.destroy({
+    await user.destroy({
       where: {
           id: req.params.id
       }
@@ -105,7 +105,7 @@ async function removeEmployee(req, res, next) {
 async function restoreEmployee(req, res, next) {
 
   try{
-    await User.restore({
+    await user.restore({
       where: {
           id: req.params.id
       }
@@ -144,9 +144,9 @@ async function employee(req, res, next) {
 
 module.exports = {
   getEmployee,
+  getEmployeesDetails,
   addEmployee,
   removeEmployee,
   restoreEmployee,
-  getEmployeesDetails,
   employee
 };
