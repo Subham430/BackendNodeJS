@@ -27,13 +27,20 @@ db.sequelize = sequelize;
 // })
 
 const {
-    users,
+    user,role,users_organisation_mapping
 } = require('../models/index')(sequelize, Sequelize);
 // users.User.hasOne(task)
 
-const User = users.User
+// const User = user.user;
+// const Role = role.role;
+// const Users_organisation_mapping = users_organisation_mapping.users_organisation_mapping;
+
+
+
 module.exports = db;
-module.exports.User = User;
+// module.exports.Role = Role;
+// module.exports.User = User;
+// module.exports.Users_organisation_mapping = Users_organisation_mapping;
 
 
 

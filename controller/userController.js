@@ -1,22 +1,41 @@
 // external imports
 const { sequelize } = require("../config/server"),
-    { user } = sequelize.models,
+    { user, role } = sequelize.models,
     bcrypt = require("bcrypt");
+// const Role = require('../models/role').role;
+
 
 // get user details
 async function getEmployee(req, res, next) {
   try {
+    console.log("entry");
     const user_details = await user.findOne({
       where: {
         id: req.params.id
-      }
+      },
+      include: [
+        { 
+          model: role, 
+          as : "userRole" , 
+          attributes:{
+            exclude:['deletedAt']
+          }
+        },
+      ],
     });
     res.status(200).json({
       message: "User details",
       data: user_details,
     });
     } catch (err) {
-      next(err);
+      res.status(500).json({
+        errors: {
+          common: {
+            msg: "Unknown error occured!",
+            error: err
+          },
+        },
+      });
     }
 }
 
