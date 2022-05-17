@@ -10,8 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      */
      static associate(models) {
       // define association here
-      console.log("hello");
-      this.hasOne(models.role, { through: 'users_organisation_mappings', foreignKey:"user_id", otherKey:"role_id" , as:"userRole"});
+      // this.hasOne(models.role, { 
+      //   through: models.user_origanisation_mapping, 
+      //   foreignKey:"user_id", 
+      //   otherKey:"role_id" , 
+      //   as:"userRole"
+      // });
+      user.hasOne('roles', {
+        through: 'users_organisation_mappings',
+        foreignKey:"user_id", 
+        sourceKey: "role_id",
+        as:"users_organisation_mapping"
+      });
     }
 
     toJSON() {
@@ -31,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     paranoid: true,
     modelName: 'user',
+    tableName: 'users',
   });
   return user;
 };

@@ -13,15 +13,15 @@ async function getEmployee(req, res, next) {
       where: {
         id: req.params.id
       },
-      include: [
-        { 
-          model: role, 
-          as : "userRole" , 
-          attributes:{
-            exclude:['deletedAt']
-          }
-        },
-      ],
+      // include: [
+      //   { 
+      //     model: role, 
+      //     as : "userRole" , 
+      //     attributes:{
+      //       exclude:['deletedAt']
+      //     }
+      //   },
+      // ],
     });
     res.status(200).json({
       message: "User details",

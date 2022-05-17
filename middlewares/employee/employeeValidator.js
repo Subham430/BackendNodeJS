@@ -3,7 +3,7 @@ const{check, validationResult} = require("express-validator");
 const createError=require("http-errors");
 
 const { sequelize } = require("../../config/server"),
-    { User } = sequelize.models;
+    { user } = sequelize.models;
 
 // add user
 const addUserValidators=[
@@ -25,12 +25,12 @@ const addUserValidators=[
         .trim()
         .custom(async (value) => {
             try{
-                const user=await User.findOne({
+                const User=await user.findOne({
                     where: {
                         email: value,
                     }
                 });
-                if (user){
+                if (User){
                     throw createError("Email already is exists!");
                 }
             }catch (err){

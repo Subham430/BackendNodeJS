@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     paranoid: true,
     modelName: 'users_organisation_mapping',
+    tableName: 'users_organisation_mappings'
   });
   return users_organisation_mapping;
 };
