@@ -1,27 +1,31 @@
 // external imports
-const { sequelize } = require("../config/server"),
-    { user, role } = sequelize.models,
-    bcrypt = require("bcrypt");
-// const Role = require('../models/role').role;
+// const { sequelize } = require("../config/server"),
+//     { user, role } = sequelize.models,
+//     bcrypt = require("bcrypt");
+const User = require('../models').user;
+const Role = require('../models').role;
+const User_origanisation_mapping = require('../models').user_origanisation_mapping;
+
+const bcrypt = require("bcrypt");
 
 
 // get user details
 async function getEmployee(req, res, next) {
   try {
     console.log("entry");
-    const user_details = await user.findOne({
+    const user_details = await User.findOne({ 
       where: {
         id: req.params.id
       },
-      // include: [
-      //   { 
-      //     model: role, 
-      //     as : "userRole" , 
-      //     attributes:{
-      //       exclude:['deletedAt']
-      //     }
-      //   },
-      // ],
+      include: [
+        { 
+          model: User_origanisation_mapping, 
+          // where:{ user_id : req.params.id},
+          attributes:[
+          ]
+        },
+      ],
+      
     });
     res.status(200).json({
       message: "User details",
@@ -42,7 +46,7 @@ async function getEmployee(req, res, next) {
 // get users details
 async function getEmployeesDetails(req, res, next) {
   try {
-    const users = await user.findAll();
+    const users = await User.findAll();
     res.status(200).json({
       message: "User details",
       data: users,
@@ -58,16 +62,16 @@ async function addEmployee(request, res, next) {
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
   
   try{
-    await user.create({
+    await User.create({
       user_name: request.body.user_name,
       company_name: request.body.company_name,
       email: request.body.email,
       password: hashedPassword
-    }).then(function (user) {
-      if (user) {
+    }).then(function (User) {
+      if (User) {
         res.status(201).json({
             message: "User was added successfully!",
-            data: user,
+            data: User,
         });
       } else {
           response.status(400).json({
@@ -91,7 +95,7 @@ async function addEmployee(request, res, next) {
 async function removeEmployee(req, res, next) {
 
   try{
-    await user.destroy({
+    await User.destroy({
       where: {
           id: req.params.id
       }
@@ -124,7 +128,7 @@ async function removeEmployee(req, res, next) {
 async function restoreEmployee(req, res, next) {
 
   try{
-    await user.restore({
+    await User.restore({
       where: {
           id: req.params.id
       }
