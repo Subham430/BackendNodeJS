@@ -4,36 +4,30 @@
 //     bcrypt = require("bcrypt");
 const User = require('../models').user;
 const Role = require('../models').role;
-const User_origanisation_mapping = require('../models').users_organisation_mapping;
+const Users_organisation_mapping = require('../models').users_organisation_mapping;
 
 const bcrypt = require("bcrypt");
 
 // get user details
 async function getEmployee(req, res, next) {
   try {
-    console.log("entry");
     const user_details = await User.findOne({ 
       where: {
         id: req.params.id
       },
       include: [
         { 
-          model: User_origanisation_mapping, 
-          // where:{ user_id : req.params.id},
-          attributes:[
-          ]
-      },
-     ],     
+          model: Users_organisation_mapping, 
+        },
+        // { 
+        //   model: Role, 
+        // },
+      ],     
     });
-    // const userRole = await User_origanisation_mapping.findOne({
-    //   where:{
-    //     user_id:req.params.id
-    //   }
-    // })
     
     res.status(200).json({
       message: "User details",
-      data: userRole
+      data: user_details
     });
     } catch (err) {
       res.status(500).json({
