@@ -5,7 +5,6 @@ const employeeRouter = express.Router();
 const { addUserValidators, addUserValidationHandler} = require("../middlewares/employee/employeeValidator");
 const { UserController } = require("../controller");
 
-
 //user details
 employeeRouter.get("/details/:id", UserController.getEmployee);
 //users details

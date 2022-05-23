@@ -1,7 +1,4 @@
-// external imports
-// const { sequelize } = require("../config/server"),
-//     { user, role } = sequelize.models,
-//     bcrypt = require("bcrypt");
+// internal imports
 const User = require('../models').user;
 const Role = require('../models').role;
 const Users_organisation_mapping = require('../models').users_organisation_mapping;
@@ -17,11 +14,9 @@ async function getEmployee(req, res, next) {
       },
       include: [
         { 
-          model: Users_organisation_mapping, 
+          model: Role, 
+          as: "role"
         },
-        // { 
-        //   model: Role, 
-        // },
       ],     
     });
     

@@ -7,6 +7,6 @@ const { doLoginValidators, doLoginValidationHandler } = require("../middlewares/
 const {login} = require("../controller/loginController");
 
 // login page
-loginRouter.post("/", doLoginValidators, doLoginValidationHandler, login);
+loginRouter.post("/user", doLoginValidators, doLoginValidationHandler, login);
 
 module.exports = loginRouter;

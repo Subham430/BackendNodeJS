@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.users_organisation_mapping, { 
         foreignKey:"user_id",
       });
-      // this.hasOne(models.role,{ 
-      //   through:"users_organisation_mappings",
-      //   foreignKey:"user_id",
-      //   otherKey:"role_id" 
-      // })
+      this.hasOne(models.role,{ 
+        through: models.users_organisation_mapping,
+        foreignKey:"user_id",
+        otherKey:"role_id" ,
+        as: "role"
+      })
     }
 
     toJSON() {

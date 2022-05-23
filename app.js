@@ -11,16 +11,23 @@ app.use(express.urlencoded({ extended:true }));
 
 
 const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandler')
+const { authenticate } = require('./middlewares/auth/index');
+
 
 const loginRouter = require("./routers/loginRouter");
 const adminRouter = require('./routers/adminRouter');
 const employeeRouter = require('./routers/employeeRouter');
 const companyRouter = require('./routers/companyRouter');
 
-app.use('/login',loginRouter);
-app.use('/admin',adminRouter);
-app.use('/employee',employeeRouter);
-app.use('/company',companyRouter);
+app.use('/login', loginRouter);
+app.use('/admin',authenticate, adminRouter);
+app.use('/employee', authenticate, employeeRouter);
+app.use('/company',authenticate, companyRouter);
+
+// app.use('/login', loginRouter);
+// app.use('/admin', adminRouter);
+// app.use('/employee', employeeRouter);
+// app.use('/company', companyRouter);
 
 //not found handler
 app.use(notFoundHandler);
