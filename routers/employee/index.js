@@ -2,8 +2,8 @@ const express = require('express');
 const employeeRouter = express.Router();
 
 // internal imports
-const { addUserValidators, addUserValidationHandler} = require("../middlewares/employee/employeeValidator");
-const { UserController } = require("../controller");
+const { addUserValidators, addUserValidationHandler} = require("../../middlewares/employee/employeeValidator");
+const { UserController } = require("../../controller");
 
 //user details
 employeeRouter.get("/details/:id", UserController.getEmployee);
