@@ -3,6 +3,7 @@ const employeeRouter = express.Router();
 
 // internal imports
 const { addUserValidators, addUserValidationHandler} = require("../../middlewares/employee/employeeValidator");
+const { updateUserValidators, updateUserValidationHandler} = require("../../middlewares/employee/employeeUpdateValidator");
 const { UserController } = require("../../controller");
 
 /**
@@ -72,7 +73,7 @@ employeeRouter.get("/details", UserController.getEmployeesDetails);
  *                 example: "Subham Dutta"
  *               email:
  *                 type: string
- *                 example: "Some amazing description for my post"
+ *                 example: "subham@gmail.com"
  *               company_name:
  *                 type: string
  *                 example: "Swastik"
@@ -81,7 +82,7 @@ employeeRouter.get("/details", UserController.getEmployeesDetails);
  *                 example: "Password@420"
  *     responses:
  *       200:
- *         description: Created post.
+ *         description: Created employee.
  *         content:
  *           application/json:
  *             schema:
@@ -91,6 +92,43 @@ employeeRouter.get("/details", UserController.getEmployeesDetails);
 
 //user add
 employeeRouter.post("/add", addUserValidators, addUserValidationHandler, UserController.addEmployee);
+
+/**
+ * @swagger
+ * /swastik/employee/update:
+ *   post:
+ *     tags: [Employee]
+ *     summary: update Employee
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_name:
+ *                 type: string
+ *                 example: "Subham Dutta"
+ *               email:
+ *                 type: string
+ *                 example: "subham@gmail.com"
+ *               company_name:
+ *                 type: string
+ *                 example: "Swastik"
+ *               password:
+ *                 type: string
+ *                 example: "Password@420"
+ *     responses:
+ *       200:
+ *         description: update employee.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
+
+//user update
+employeeRouter.post("/update", updateUserValidators, updateUserValidationHandler, UserController.updateEmployee);
 
 /**
  * @swagger
@@ -113,6 +151,8 @@ employeeRouter.post("/add", addUserValidators, addUserValidationHandler, UserCon
  *             schema:
  *               type: object
  */
+
+
 //user removal
 employeeRouter.delete("/remove/:id", UserController.removeEmployee);
 

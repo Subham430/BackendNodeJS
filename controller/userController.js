@@ -49,7 +49,6 @@ async function getEmployeesDetails(req, res, next) {
     }
 }
 
-
 // add user
 async function addEmployee(request, res, next) {
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
@@ -72,6 +71,58 @@ async function addEmployee(request, res, next) {
           });
       }
     });  
+  } catch (err) {
+      res.status(500).json({
+        errors: {
+          common: {
+            msg: "Unknown error occured!",
+            error: err
+          },
+        },
+      });
+  }
+}
+
+// update user
+async function updateEmployee(request, res, next) {
+  console.log(request.body.password)
+  try{
+    const user_details = await User.findOne({ 
+      where: {
+        id: request.body.id
+      },     
+    });
+    
+    if(!user_details){
+      response.status(404).json({
+        message: 'no such record found'
+      });
+    }
+
+    if((request.body.password)){
+      const hashedPassword = await bcrypt.hash(request.body.password, 10);
+      request.body.password = hashedPassword;
+    }
+    
+    await User.update({
+      user_name: request.body.user_name || user_details.user_name,
+      company_name: request.body.company_name || user_details.company_name,
+      password: request.body.password || user_details.password
+    },{ 
+      where: { id: request.body.id }
+    }).then(function (User) {
+      if (User) {
+        res.status(201).json({
+            message: "User was updated successfully!",
+            data: User,
+        });
+      } else {
+          response.status(400).json({
+            message: 'Error in updating the record'
+          });
+      }
+    });  
+
   } catch (err) {
       res.status(500).json({
         errors: {
@@ -164,5 +215,6 @@ module.exports = {
   addEmployee,
   removeEmployee,
   restoreEmployee,
-  employee
+  employee,
+  updateEmployee
 };
