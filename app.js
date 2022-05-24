@@ -4,7 +4,7 @@ require('dotenv').config();
 const path = require("path");
 const body = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpecs = require('./src/config/swagger');
+const swaggerSpecs = require('./config/swagger');
 const express = require('express');
 const app = express();
 
