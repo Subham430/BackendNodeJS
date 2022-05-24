@@ -12,12 +12,12 @@ async function getEmployee(req, res, next) {
       where: {
         id: req.params.id
       },
-      include: [
-        { 
-          model: Role, 
-          as: "role"
-        },
-      ],     
+      // include: [
+      //   { 
+      //     model: Role, 
+      //     as: "role"
+      //   },
+      // ],     
     });
     
     res.status(200).json({

@@ -6,6 +6,5 @@ exports.generateAccessToken = function (data, expiresIn = "3h") {
 }
 
 exports.varifyAccessToken = function (token = "", callback = () => {}) {
-    console.log("varify token");
     jwt.verify(token, process.env.TOKEN_SECRET, callback)
 }
