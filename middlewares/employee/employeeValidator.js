@@ -44,9 +44,9 @@ const addUserValidators=[
 
 const addUserValidationHandler = function (req, res, next){
     const errors = validationResult(req);
-    console.log(errors,errors.isEmpty());
     if (errors.isEmpty()){
         next();
+        
     }else{
         // response the enrors
         res.status(500).json({

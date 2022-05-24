@@ -1,9 +1,8 @@
 const { varifyAccessToken } = require("../../utilities");
 
 exports.authenticate = function (req, res, next) {
-  // console.log("authenticate")
+  
   // const token = req.getAccessToken();
-  // console.log("authenticate")
 
   const {authorization} = req.headers;
   const token = authorization.split(' ')[1];
