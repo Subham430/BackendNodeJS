@@ -14,7 +14,7 @@ const {login} = require("../../controller/loginController");
 
 /**
  * @swagger
- * /login/user:
+ * /swastik/login/user:
  *   post:
  *     tags: [Login]
  *     summary: Login

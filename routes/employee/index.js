@@ -13,7 +13,7 @@ const { UserController } = require("../../controller");
 
 /**
  * @swagger
- * /employee/details/{id}:
+ * /swastik/employee/details/{id}:
  *   get:
  *     tags: [Employee]
  *     summary: Get a particular Employee
@@ -21,7 +21,7 @@ const { UserController } = require("../../controller");
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID of the post to retrieve.
+ *         description: ID of the employee to retrieve.
  *         schema:
  *           type: integer
  *     responses:
@@ -38,7 +38,7 @@ employeeRouter.get("/details/:id", UserController.getEmployee);
 
 /**
  * @swagger
- * /employee/details:
+ * /swastik/employee/details:
  *   get:
  *     tags: [Employee]
  *     summary: Get all employees
@@ -54,10 +54,89 @@ employeeRouter.get("/details/:id", UserController.getEmployee);
 //users details
 employeeRouter.get("/details", UserController.getEmployeesDetails);
 
+/**
+ * @swagger
+ * /swastik/employee/add:
+ *   post:
+ *     tags: [Employee]
+ *     summary: Create Employee
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_name:
+ *                 type: string
+ *                 example: "Subham Dutta"
+ *               email:
+ *                 type: string
+ *                 example: "Some amazing description for my post"
+ *               company_name:
+ *                 type: string
+ *                 example: "Swastik"
+ *               password:
+ *                 type: string
+ *                 example: "Password@420"
+ *     responses:
+ *       200:
+ *         description: Created post.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
+
+
 //user add
 employeeRouter.post("/add", addUserValidators, addUserValidationHandler, UserController.addEmployee);
+
+/**
+ * @swagger
+ * /swastik/employee/remove/{id}:
+ *   get:
+ *     tags: [Employee]
+ *     summary: remove a particular Employee
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the employee to remove.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: remove the Employee.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 //user removal
 employeeRouter.delete("/remove/:id", UserController.removeEmployee);
+
+/**
+ * @swagger
+ * /swastik/employee/restore/{id}:
+ *   get:
+ *     tags: [Employee]
+ *     summary: Get a particular Employee restored
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the employee to restore.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Details of the Employee restored.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 //user restore
 employeeRouter.get("/restore/:id", UserController.restoreEmployee);
 

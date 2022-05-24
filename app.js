@@ -15,12 +15,13 @@ const {notFoundHandler, errorHandler} = require('./middlewares/common/errorHandl
 
 const router = require("./routes");
 app.use('/swastik', router);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 
 //not found handler
 app.use(notFoundHandler);
 
 // default error handler
 app.use(errorHandler);
-app.use(process.env.SWAGGER_DOC_URL, swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
 
 app.listen(process.env.PORT, () => console.log(`Example app is listening on port ${process.env.PORT}`));
